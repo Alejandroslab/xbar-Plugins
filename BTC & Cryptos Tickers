@@ -43,7 +43,8 @@ btccoinbase=$(curl -s "https://api.coinbase.com/v2/prices/spot?currency=EUR" -H 
 	btccoinbaseUSD=$(curl -s "https://api.coinbase.com/v2/prices/spot?currency=USD" -H "CB-VERSION: 2017-04-16" | egrep -o '{"data":{"amount":"[0-9]+(\.)?' | sed 's/{"data":{"amount"://'  | sed 's:^.\(.*\).$:\1:')
 	
 	
-	#altre coin
+	#other coins
+	
 	ethgdax=$(curl -s "https://api.gdax.com/products/eth-eur/ticker" | egrep -o '"price":"[0-9]+(\.)?([0-9]{0,}")?' | sed 's/"price"://' | sed 's/\"//g' )
 	ltcgdax=$(curl -s "https://api.gdax.com/products/ltc-eur/ticker" | egrep -o '"price":"[0-9]+(\.)?([0-9]{0,}")?' | sed 's/"price"://' | sed 's/\"//g' )
 	bchkraken=$(curl -s "https://api.kraken.com/0/public/Ticker?pair=BCHEUR" | tr -d '{}"[]' | tr ':,' '\n' | grep -A1 "^c$" | tail -1)
