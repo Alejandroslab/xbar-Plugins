@@ -222,7 +222,3 @@ Add -l to shebang to automatic add newline to print function: #!/usr/bin/perl -l
 PHP
 Status: Working
 Output: echo 'your string here'
-Notes
-Add shebang #!/usr/bin/php
-Utilities:
-BitBar PHP Formatter - https://github.com/SteveEdson/bitbar-php
