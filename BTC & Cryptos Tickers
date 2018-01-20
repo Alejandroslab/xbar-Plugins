@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # <bitbar.title>BTC & Cryptos Tickers</bitbar.title>
 # <bitbar.version>v1.0</bitbar.version>
 # <bitbar.author>ASCII</bitbar.author>
@@ -6,13 +8,6 @@
 # <bitbar.image>http://www.hosted-somewhere/pluginimage</bitbar.image>
 # <bitbar.dependencies>bash</bitbar.dependencies>
 # <bitbar.abouturl>http://url-to-about.com/</bitbar.abouturl>
-
-#!/bin/bash
-# <bitbar.title>Cryptos</bitbar.title>
-# <bitbar.version>v1.0</bitbar.version>
-# <bitbar.author>Alejandro Santos</bitbar.author>
-# <bitbar.author.github>alejandroslab</bitbar.author.github>
-# <bitbar.desc> A lot of cryptos in EUR and USD</bitbar.desc>
 
 #btc euro
 btccoinbase=$(curl -s "https://api.coinbase.com/v2/prices/spot?currency=EUR" -H "CB-VERSION: 2017-04-16" | egrep -o '{"data":{"amount":"[0-9]+(\.)?' | sed 's/{"data":{"amount"://'  | sed 's:^.\(.*\).$:\1:')
