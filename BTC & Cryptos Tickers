@@ -1,9 +1,202 @@
-# <bitbar.title>Title goes here</bitbar.title>
+# <bitbar.title>BTC & Cryptos Tickers</bitbar.title>
 # <bitbar.version>v1.0</bitbar.version>
-# <bitbar.author>Your Name</bitbar.author>
-# <bitbar.author.github>your-github-username</bitbar.author.github>
-# <bitbar.desc>Short description of what your plugin does.</bitbar.desc>
+# <bitbar.author>ASCII</bitbar.author>
+# <bitbar.author.github>Alejandroslab</bitbar.author.github>
+# <bitbar.desc>Crypto Tickers</bitbar.desc>
 # <bitbar.image>http://www.hosted-somewhere/pluginimage</bitbar.image>
-# <bitbar.dependencies>python,ruby,node</bitbar.dependencies>
+# <bitbar.dependencies>bash</bitbar.dependencies>
 # <bitbar.abouturl>http://url-to-about.com/</bitbar.abouturl>
 
+#!/bin/bash
+# <bitbar.title>Cryptos</bitbar.title>
+# <bitbar.version>v1.0</bitbar.version>
+# <bitbar.author>Alejandro Santos</bitbar.author>
+# <bitbar.author.github>alejandroslab</bitbar.author.github>
+# <bitbar.desc> A lot of cryptos in EUR and USD</bitbar.desc>
+
+#btc euro
+btccoinbase=$(curl -s "https://api.coinbase.com/v2/prices/spot?currency=EUR" -H "CB-VERSION: 2017-04-16" | egrep -o '{"data":{"amount":"[0-9]+(\.)?' | sed 's/{"data":{"amount"://'  | sed 's:^.\(.*\).$:\1:')
+	
+	btcgdax=$(curl -s "https://api.gdax.com/products/btc-eur/ticker" | egrep -o '"price":"[0-9]+(\.)?([0-9]{0,}")?' | sed 's/"price"://' | sed 's/\"//g' )
+
+	btckraken=$(curl -s "https://api.kraken.com/0/public/Ticker?pair=BTCEUR" | tr -d '{}"[]' | tr ':,' '\n' | grep -A1 "^c$" | tail -1)
+
+	btcbitstamp=$(curl -s "https://www.bitstamp.net/api/v2/ticker/btceur/" | egrep -o '"last": "[0-9]+(\.)?([0-9]{0,2}")?' | sed 's/"last"://' | sed 's/\"//g' )
+	
+	btcbitfinex=$(curl -s "https://www.bitstamp.net/api/v2/ticker/btceur/" | egrep -o '"last": "[0-9]+(\.)?([0-9]{0,2}")?' | sed 's/"last"://' | sed 's/\"//g' )
+	
+	btchitbtc=$(curl -s "https://api.hitbtc.com/api/2/public/ticker/BTCEUR" | egrep -o '"last":"[0-9]+(\.)?([0-9]{0,}")?' | sed 's/"last"://' | sed 's/\"//g' )
+
+	
+	#btc in dollari
+	btcbitfinexUSD=$(curl -s "https://www.bitstamp.net/api/v2/ticker/btcusd/" | egrep -o '"last": "[0-9]+(\.)?([0-9]{0,2}")?' | sed 's/"last"://' | sed 's/\"//g' )
+	
+	btcbitstampUSD=$(curl -s "https://www.bitstamp.net/api/v2/ticker/btcusd/" | egrep -o '"last": "[0-9]+(\.)?([0-9]{0,2}")?' | sed 's/"last"://' | sed 's/\"//g' )
+
+	btcgdaxUSD=$(curl -s "https://api.gdax.com/products/btc-usd/ticker"| egrep -o '"price":"[0-9]+(\.)?([0-9]{0,}")?' | sed 's/"price"://' | sed 's/\"//g' )
+
+	btcgeminiUSD=$(curl -s "https://api.gemini.com/v1/pubticker/btcusd"| egrep -o '"last":"[0-9]+(\.)?([0-9]{0,}")?' | sed 's/"last"://' | sed 's/\"//g')
+
+	btchitbtcUSD=$(curl -s "http://api.hitbtc.com/api/1/public/BTCUSD/ticker"| egrep -o '"last":"[0-9]+(\.)?([0-9]{0,}")?' | sed 's/"last"://' | sed 's/\"//g' )
+
+	btckrakenUSD=$(curl -s "https://api.kraken.com/0/public/Ticker?pair=XBTUSD" | egrep -o '"c":["[0-9]+(\.)?([0-9]{0,}")?' | sed 's/"c":\[//' | sed 's/\"//g')
+
+	btcpoloniexUSD=$(curl -s "https://poloniex.com/public?command=returnTicker"| egrep -o '"USDT_BTC":{"id":121,"last":"[0-9]+(\.)?([0-9]{0,})?' | sed 's/"USDT_BTC":{"id":121,"last":"//' | sed 's/\"//g' )
+
+	btcbittrexUSD=$(curl -s https://bittrex.com/api/v1.1/public/getticker?market=btc-usdt| tr -d '{}"' | tr ':,' '\n' | grep -A1 "Last" | tail -1)
+	
+	btccoinbaseUSD=$(curl -s "https://api.coinbase.com/v2/prices/spot?currency=USD" -H "CB-VERSION: 2017-04-16" | egrep -o '{"data":{"amount":"[0-9]+(\.)?' | sed 's/{"data":{"amount"://'  | sed 's:^.\(.*\).$:\1:')
+	
+	
+	#altre coin
+	ethgdax=$(curl -s "https://api.gdax.com/products/eth-eur/ticker" | egrep -o '"price":"[0-9]+(\.)?([0-9]{0,}")?' | sed 's/"price"://' | sed 's/\"//g' )
+	ltcgdax=$(curl -s "https://api.gdax.com/products/ltc-eur/ticker" | egrep -o '"price":"[0-9]+(\.)?([0-9]{0,}")?' | sed 's/"price"://' | sed 's/\"//g' )
+	bchkraken=$(curl -s "https://api.kraken.com/0/public/Ticker?pair=BCHEUR" | tr -d '{}"[]' | tr ':,' '\n' | grep -A1 "^c$" | tail -1)
+	xmrpoloniex=$(curl -s https://poloniex.com/public?command=returnTicker | tr '}' '\n' | grep BTC_XMR | tr -d '{}"' | tr ':,' '\n' | grep -A1 "last" | tail -1)
+	ltcpoloniex=$(curl -s https://poloniex.com/public?command=returnTicker | tr '}' '\n' | grep BTC_LTC | tr -d '{}"' | tr ':,' '\n' | grep -A1 "last" | tail -1)
+	xrppoloniex=$(curl -s https://poloniex.com/public?command=returnTicker | tr '}' '\n' | grep BTC_XRP| tr -d '{}"' | tr ':,' '\n' | grep -A1 "last" | tail -1)
+	dashpoloniex=$(curl -s https://poloniex.com/public?command=returnTicker | tr '}' '\n' | grep BTC_DASH| tr -d '{}"' | tr ':,' '\n' | grep -A1 "last" | tail -1)
+	
+vtcbittrex=$(curl -s https://bittrex.com/api/v1.1/public/getticker?market=btc-vtc | tr -d '{}"' | tr ':,' '\n' | grep -A1 "Last" | tail -1)
+ltcbinance=$(curl -s https://api.binance.com/api/v1/ticker/price?symbol=LTCBTC | tr -d '{}"' | tr ':,' '\n' | grep -A1 "price" | tail -1)
+xrpkraken=$(curl -s "https://api.kraken.com/0/public/Ticker?pair=XRPEUR" | tr -d '{}"[]' | tr ':,' '\n' | grep -A1 "^c$" | tail -1)
+xrpbinance=$(curl -s https://api.binance.com/api/v1/ticker/price?symbol=XRPBTC | tr -d '{}"' | tr ':,' '\n' | grep -A1 "price" | tail -1)
+
+ethkraken=$(curl -s "https://api.kraken.com/0/public/Ticker?pair=ETHEUR" | tr -d '{}"[]' | tr ':,' '\n' | grep -A1 "^c$" | tail -1)
+ethpoloniex=$(curl -s https://poloniex.com/public?command=returnTicker | tr '}' '\n' | grep BTC_ETH| tr -d '{}"' | tr ':,' '\n' | grep -A1 "last" | tail -1)
+ethbinance=$(curl -s https://api.binance.com/api/v1/ticker/price?symbol=ETHBTC | tr -d '{}"' | tr ':,' '\n' | grep -A1 "price" | tail -1)
+ethbittrex=$(curl -s https://bittrex.com/api/v1.1/public/getticker?market=btc-eth | tr -d '{}"' | tr ':,' '\n' | grep -A1 "Last" | tail -1)
+adabittrex=$(curl -s https://bittrex.com/api/v1.1/public/getticker?market=btc-ada | tr -d '{}"' | tr ':,' '\n' | grep -A1 "Last" | tail -1)
+adabinance=$(curl -s https://api.binance.com/api/v1/ticker/price?symbol=ADABTC | tr -d '{}"' | tr ':,' '\n' | grep -A1 "price" | tail -1)
+
+trxbinance=$(curl -s https://api.binance.com/api/v1/ticker/price?symbol=TRXBTC | tr -d '{}"' | tr ':,' '\n' | grep -A1 "price" | tail -1)
+bchbinance=$(curl -s https://api.binance.com/api/v1/ticker/price?symbol=BCCBTC | tr -d '{}"' | tr ':,' '\n' | grep -A1 "price" | tail -1)
+bchbittrex=$(curl -s https://bittrex.com/api/v1.1/public/getticker?market=btc-ada | tr -d '{}"' | tr ':,' '\n' | grep -A1 "Last" | tail -1)
+
+neobinance=$(curl -s https://api.binance.com/api/v1/ticker/price?symbol=NEOBTC | tr -d '{}"' | tr ':,' '\n' | grep -A1 "price" | tail -1)
+xembittrex=$(curl -s https://bittrex.com/api/v1.1/public/getticker?market=btc-xem | tr -d '{}"' | tr ':,' '\n' | grep -A1 "Last" | tail -1)
+rddbittrex=$(curl -s https://bittrex.com/api/v1.1/public/getticker?market=btc-rdd | tr -d '{}"' | tr ':,' '\n' | grep -A1 "Last" | tail -1)
+
+xlmbinance=$(curl -s https://api.binance.com/api/v1/ticker/price?symbol=XLMBTC | tr -d '{}"' | tr ':,' '\n' | grep -A1 "price" | tail -1)
+
+iotabinance=$(curl -s https://api.binance.com/api/v1/ticker/price?symbol=IOTABTC | tr -d '{}"' | tr ':,' '\n' | grep -A1 "price" | tail -1)
+eosbinance=$(curl -s https://api.binance.com/api/v1/ticker/price?symbol=EOSBTC | tr -d '{}"' | tr ':,' '\n' | grep -A1 "price" | tail -1)
+btgbinance=$(curl -s https://api.binance.com/api/v1/ticker/price?symbol=BTGBTC | tr -d '{}"' | tr ':,' '\n' | grep -A1 "price" | tail -1)
+sntbinance=$(curl -s https://api.binance.com/api/v1/ticker/price?symbol=SNTBTC | tr -d '{}"' | tr ':,' '\n' | grep -A1 "price" | tail -1)
+
+bcnpoloniex=$(curl -s https://poloniex.com/public?command=returnTicker | tr '}' '\n' | grep BTC_BCN| tr -d '{}"' | tr ':,' '\n' | grep -A1 "last" | tail -1)
+
+bnbbinance=$(curl -s https://api.binance.com/api/v1/ticker/price?symbol=BNBBTC | tr -d '{}"' | tr ':,' '\n' | grep -A1 "price" | tail -1)
+lskbinance=$(curl -s https://api.binance.com/api/v1/ticker/price?symbol=LSKBTC | tr -d '{}"' | tr ':,' '\n' | grep -A1 "price" | tail -1)
+
+################
+#echo "$(printf "GDAX %.2f" "$btcgdax")"
+#echo "$(printf "ETH %.2f" "$ethgdax")"
+#echo "$(printf "LTC %.2f" "$ltcgdax")"
+
+printf " GDAX € %.2f" "$btcgdax" 
+printf "   ETH € %.2f" "$ethgdax" 
+echo "$(printf "   LTC € %.2f" "$ltcgdax")"
+#echo "$(printf "GDAX € %.2f \n" "$btcgdax")|color=white" "-" "$(printf "ETH € #%.2f \n" "$ethgdax") | href=\"https://www.gdax.com/trade/ETH-EUR\""
+echo "---"
+echo "$(printf "ETH € %.2f \n" "$ethgdax") | href=\"https://www.gdax.com/trade/ETH-EUR\""
+echo "$(printf "LTC € %.2f \n" "$ltcgdax") | href=\"https://www.gdax.com/trade/LTC-EUR\""
+echo "---"
+
+echo "BTC/EUR|color=blue"
+echo "--$(printf "Kraken € %.2f \n" "$btckraken")|href=\"https://cryptowat.ch/kraken/btceur\""
+echo "--$(printf "Bitstamp € %.2f \n" "$btcbitstamp") | href=\"https://cryptowat.ch/kraken/btceur\""
+echo "--$(printf "Coinbase € %.2f \n" "$btccoinbase")| href=\"https://cryptowat.ch/kraken/btceur\""
+echo "--$(printf "Bitfinex € %.2f \n" "$btcbitfinex")|  href=\"https://cryptowat.ch/kraken/btceur\""
+echo "--$(printf "HitBtc € %.2f \n" "$btchitbtc") | href=\"https://cryptowat.ch/kraken/btceur\""
+
+echo "BTC/USD|color=white"
+echo "--$(printf "Bitfinex $ %.2f \n" "$btcbitfinexUSD") | href=\"https://cryptowat.ch/kraken/btceur\""
+echo "--$(printf "Bitstamp $ %.2f \n" "$btcbitstampUSD") | href=\"https://cryptowat.ch/kraken/btceur\""
+echo "--$(printf "GDAX $ %.2f \n" "$btcgdaxUSD") | href=\"https://cryptowat.ch/kraken/btceur\""
+echo "--$(printf "Gemini $ %.2f \n" "$btcgeminiUSD") | href=\"https://cryptowat.ch/kraken/btceur\""
+echo "--$(printf "HitBtc $ %.2f \n" "$btchitbtcUSD") | href=\"https://cryptowat.ch/kraken/btceur\""
+echo "--$(printf "Kraken $ %.2f \n" "$btckrakenUSD") | href=\"https://cryptowat.ch/kraken/btceur\""
+echo "--$(printf "Poloniex $ %.2f \n" "$btcpoloniexUSD") | href=\"https://cryptowat.ch/kraken/btceur\""
+echo "--$(printf "Bittrex $ %.2f \n" "$btcbittrexUSD") | href=\"https://cryptowat.ch/kraken/btceur\""
+echo "--$(printf "Coinbase $ %.2f \n" "$btccoinbaseUSD") | href=\"https://cryptowat.ch/kraken/btceur\""
+echo "---"
+
+echo "BCH/EUR|color=blue"
+echo "--$(printf "Kraken € %.2f \n" "$bchkraken")| href=\"https://cryptowat.ch/kraken/btceur\""
+echo "--Tokyo"
+echo "BCH/BTC|color=green"
+echo "--$(printf "Binance Ƀ %.8f \n" "$bchbinance")| href=\"https://cryptowat.ch/kraken/btceur\""
+echo "--$(printf "Bittrex Ƀ %.8f \n" "$bchbittrex")| href=\"https://cryptowat.ch/kraken/btceur\""
+echo "---"
+
+echo "ETH/EUR|color=blue"
+echo "--$(printf "Kraken € %.2f \n" "$ethkraken")| href=\"https://cryptowat.ch/kraken/btceur\""
+echo "ETH/BTC|color=green"
+echo "--$(printf "Poloniex Ƀ %.8f \n" "$ethpoloniex")| href=\"https://cryptowat.ch/kraken/btceur\""
+echo "--$(printf "Binance Ƀ %.8f \n" "$ethbinance")| href=\"https://cryptowat.ch/kraken/btceur\""
+echo "--$(printf "Bittrex Ƀ %.8f \n" "$ethbittrex")| href=\"https://cryptowat.ch/kraken/btceur\""
+
+echo "XRP/EUR|color=blue"
+echo "--$(printf "Kraken € %.2f \n" "$xrpkraken")| href=\"https://cryptowat.ch/kraken/btceur\""
+echo "XRP/BTC|color=green"
+echo "--$(printf "Poloniex Ƀ %.8f \n" "$xrppoloniex")| href=\"https://cryptowat.ch/kraken/btceur\""
+echo "--$(printf "Binance Ƀ %.8f \n" "$xrpbinance")| href=\"https://cryptowat.ch/kraken/btceur\""
+
+echo "ADA/BTC|color=green"
+echo "--$(printf "Binance Ƀ %.8f \n" "$adabinance")| href=\"https://cryptowat.ch/kraken/btceur\""
+echo "--$(printf "Bittrex Ƀ %.8f \n" "$adabittrex")| href=\"https://cryptowat.ch/kraken/btceur\""
+
+echo "GNT/BTC|color=green"
+echo "$(printf "Poloniex Ƀ %.8f \n" "$gntpoloniex")| href=\"https://cryptowat.ch/kraken/btceur\""
+
+echo "RDD/BTC|color=green"
+echo "$(printf "Bittrex Ƀ %.8f \n" "$rddbittrex")| href=\"https://cryptowat.ch/kraken/btceur\""
+
+echo "BCN/BTC|color=green"
+echo "$(printf "Poloniex Ƀ %.8f \n" "$bcnpoloniex")| href=\"https://cryptowat.ch/kraken/btceur\""
+
+echo "NEO/BTC|color=green"
+echo "$(printf "Binance Ƀ %.8f \n" "$neobinance")| href=\"https://cryptowat.ch/kraken/btceur\""
+
+echo "BNB/BTC|color=green"
+echo "$(printf "Binance Ƀ %.8f \n" "$bnbbinance")| href=\"https://cryptowat.ch/kraken/btceur\""
+
+echo "XEM/BTC|color=green"
+echo "$(printf "Bittrex Ƀ %.8f \n" "$xembittrex")| href=\"https://cryptowat.ch/kraken/btceur\""
+
+echo "TRX/BTC|color=green"
+echo "-$(printf "Binance Ƀ %.8f \n" "$trxbinance")| href=\"https://cryptowat.ch/kraken/btceur\""
+
+echo "XLM/BTC|color=green"
+echo -"$(printf "Binance Ƀ %.8f \n" "$xlmbinance")| href=\"https://cryptowat.ch/kraken/btceur\""
+
+echo "IOTA/BTC|color=green"
+echo -"$(printf "Binance Ƀ %.8f \n" "$iotabinance")| href=\"https://cryptowat.ch/kraken/btceur\""
+
+echo "LSK/BTC|color=green"
+echo "$(printf "Binance Ƀ %.8f \n" "$lskbinance")| href=\"https://cryptowat.ch/kraken/btceur\""
+
+echo "SNT/BTC|color=green"
+echo -"$(printf "Binance Ƀ %.8f \n" "$sntbinance")| href=\"https://cryptowat.ch/kraken/btceur\""
+
+echo "EOS/BTC|color=green"
+echo -"$(printf "Binance Ƀ %.8f \n" "$eosbinance")| href=\"https://cryptowat.ch/kraken/btceur\""
+
+echo "XMR/BTC|color=green"
+echo -"$(printf "Poloniex Ƀ %.8f \n" "$xmrpoloniex")| href=\"https://cryptowat.ch/kraken/btceur\""
+
+echo "LTC/BTC|color=green"
+echo "--$(printf "Poloniex Ƀ %.8f \n" "$ltcpoloniex")|href=\"https://cryptowat.ch/kraken/btceur\""
+echo "--$(printf "Binance Ƀ %.8f \n" "$ltcbinance")|href=\"https://cryptowat.ch/kraken/btceur\""
+
+echo "BTG/BTC|color=green"
+echo -"$(printf "Binance Ƀ %.8f \n" "$btgbinance")| href=\"https://cryptowat.ch/kraken/btceur\""
+
+echo "VTC/BTC|color=green"
+echo "--$(printf "Bittrex Ƀ %.8f \n" "$vtcbittrex")| href=\"https://cryptowat.ch/kraken/btceur\""
+echo "--Live Graph | href=\"https://bittrex.com/Market/Index?MarketName=BTC-VTC\""
+
+echo "DASH/BTC|color=green"
+echo "--$(printf "Poloniex Ƀ %.8f \n" "$dashpoloniex")| href=\"https://cryptowat.ch/kraken/btceur\""
+#end
