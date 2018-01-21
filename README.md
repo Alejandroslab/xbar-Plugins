@@ -1,6 +1,6 @@
 # Bitbar-Plugins
 
-Installing plugins
+# Installing plugins
 Just download the plugin of your choice into your BitBar plugins directory and choose Refresh from one of the BitBar menus.
 
 Configure the refresh time
@@ -30,24 +30,19 @@ Because Git will ignore everything in Plugins/Enabled, you can use it to maintai
 Example
 cd Plugins/Enabled
 
-# Enable spotify plugin
+-- Enable spotify plugin
 ln -s ../Music/spotify.10s.sh
 
-# Enable uptime plugin and change update interval to 30 seconds
+-- Enable uptime plugin and change update interval to 30 seconds
 ln -s ../System/uptime.1m.sh uptime.30s.sh
 Then select the Enabled folder in your BitBar preferences.
 
-Resetting Plugin Directory
+# Resetting Plugin Directory
 In case you made the mistake of choosing a directory with thousands of files as the plugin directory and BitBar getting stuck forever, do this from terminal to reset it:
 
 defaults delete com.matryer.BitBar
 
-Contributing
-
-Help us solve bugs or build new features.
-If you want to contribute a plugin, please head over to the Plugin repository and submit a pull request. Be sure to read our guide to writing plugins below.
-
-Writing plugins
+# Writing plugins
 We're always looking for new plugins, so please send us pull requests if you write anything cool or useful.
 
 Join the conversation with plugin authors and BitBar maintainers on Slack.
@@ -61,35 +56,56 @@ Multiple lines will be cycled through over and over.
 If your output contains a line consisting only of ---, the lines below it will appear in the dropdown for that plugin, but won't appear in the menu bar itself.
 Lines beginning with -- will appear in submenus.
 
-Your lines might contain | to separate the title from other parameters, such as...
+Your lines might contain | 
+to separate the title from other parameters, such as...
+
 href=.. to make the item clickable
+
 color=.. to change their text color. eg. color=red or color=#ff0000
+
 font=.. to change their text font. eg. font=UbuntuMono-Bold
+
 size=.. to change their text size. eg. size=12
+
 bash=.. to make the item run a given script terminal with your script e.g. bash=/Users/user/BitBar_Plugins/scripts/nginx.restart.sh if there are spaces in the file path you will need quotes e.g. bash="/Users/user/BitBar Plugins/scripts/nginx.restart.sh"
-param1= to specify arguments to the script. additional params like this param2=foo param3=bar full example bash="/Users/user/BitBar_Plugins/scripts/nginx.restart.sh" param1=--verbose assuming that nginx.restart.sh is executable or bash=/usr/bin/ruby param1=/Users/user/rubyscript.rb param2=arg1 param3=arg2 if script is not executable
+
+param1= to specify arguments to the script. additional params like this param2=foo 
+
+param3=bar full example bash="/Users/user/BitBar_Plugins/scripts/nginx.restart.sh" 
+
+param1=--verbose assuming that nginx.restart.sh is executable or bash=/usr/bin/ruby param1=/Users/user/rubyscript.rb param2=arg1 param3=arg2 if script is not executable
+
 terminal=.. start bash script without opening Terminal. true or false
+
 refresh=.. to make the item refresh the plugin it belongs to. If the item runs a script, refresh is performed after the script finishes. eg. refresh=true
+
 dropdown=.. May be set to true or false. If false, the line will only appear and cycle in the status bar but not in the dropdown
+
 length=.. to truncate the line to the specified number of characters. A … will be added to any truncated strings, as well as a tooltip displaying the full string. eg. length=10
+
 trim=.. whether to trim leading/trailing whitespace from the title. true or false (defaults to true)
+
 alternate=true to mark a line as an alternate to the previous one for when the Option key is pressed in the dropdown
+
 templateImage=.. set an image for this item. The image data must be passed as base64 encoded string and should consist of only black and clear pixels. The alpha channel in the image can be used to adjust the opacity of black content, however. This is the recommended way to set an image for the statusbar. Use a 144 DPI resolution to support Retina displays. The imageformat can be any of the formats supported by Mac OS X
+
 image=.. set an image for this item. The image data must be passed as base64 encoded string. Use a 144 DPI resolution to support Retina displays. The imageformat can be any of the formats supported by Mac OS X
+
 emojize=false will disable parsing of github style :mushroom: into 🍄
+
 ansi=false turns off parsing of ANSI codes.
 
-Metadata
+# Metadata
 To enhance your entry on getbitbar.com, add the following metadata to your source code (usually in comments somewhere):
 
-# <bitbar.title>Title goes here</bitbar.title>
-# <bitbar.version>v1.0</bitbar.version>
-# <bitbar.author>Your Name</bitbar.author>
-# <bitbar.author.github>your-github-username</bitbar.author.github>
-# <bitbar.desc>Short description of what your plugin does.</bitbar.desc>
-# <bitbar.image>http://www.hosted-somewhere/pluginimage</bitbar.image>
-# <bitbar.dependencies>python,ruby,node</bitbar.dependencies>
-# <bitbar.abouturl>http://url-to-about.com/</bitbar.abouturl>
+<bitbar.title>Title goes here</bitbar.title>
+<bitbar.version>v1.0</bitbar.version>
+<bitbar.author>Your Name</bitbar.author>
+<bitbar.author.github>your-github-username</bitbar.author.github>
+<bitbar.desc>Short description of what your plugin does.</bitbar.desc>
+<bitbar.image>http://www.hosted-somewhere/pluginimage</bitbar.image>
+<bitbar.dependencies>python,ruby,node</bitbar.dependencies>
+<bitbar.abouturl>http://url-to-about.com/</bitbar.abouturl>
 
 The comment characters can be anything - use what is suitable for your language
 bitbar.title - The title of the plugin
@@ -102,7 +118,7 @@ bitbar.dependencies - Comma separated list of dependencies
 bitbar.abouturl - Absolute URL to about information
 For a real example, see the Cycle text and detail plugin source code.
 
-Useful tips
+# Useful tips
 If you're writing scripts, ensure it has a shebang at the top.
 You can add to PATH by including something like export PATH='/usr/local/bin:/usr/bin:$PATH' in your plugin script.
 You can use emoji in the output (find an example in the Music/vox Plugin).
@@ -113,23 +129,23 @@ If your plugin should support Retina displays, export your icon at 36x36 with a 
 Examples
 
 One line plugin
-#!/bin/bash
+--!/bin/bash
 date
 
 Multi-line plugin
-#!/bin/bash
+--!/bin/bash
 
-# the current date and time
+--the current date and time
 date
 
-# the current username
+--the current username
 echo $USER
 
-# the current user id
+--the current user id
 id -u
 
 Multi-line plugin with extra data
-#!/bin/bash
+--!/bin/bash
 echo "One"
 echo "Two"
 echo "Three"
@@ -142,7 +158,7 @@ Only One, Two and Three will appear in the top bar
 Clicking the plugin menu item will show all lines
 Multi-line plugin with links and colors
 
-#!/bin/bash
+--!/bin/bash
 curl -m 1 http://example.com -I >/dev/null 2>&1
 [ $? -gt 0 ] && echo "FAIL | color=red" || echo "OK | color=green"
 echo "---"
@@ -151,7 +167,7 @@ echo "Show KPI Report | color=purple href=http://example.com/report"
 Multi-line plugin with fonts and colors
 BitBar Example showing colored fonts
 
-#!/bin/zsh
+--!/bin/zsh
 FONT=( 'size=14' 'font=UbuntuMono' )
 if ((0)); then echo "DO | $FONT color=orange"
 else           echo "DO | $FONT color=cadetblue"
