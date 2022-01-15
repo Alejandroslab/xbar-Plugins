@@ -13,11 +13,11 @@
 freediskspace=$(/bin/df -H | /usr/bin/awk '/\/dev\/disk1s1/ {printf("%sB\n", $4)}'|cut -c 1-3)
 totalspace=$(/bin/df -H | /usr/bin/awk '/\/dev\/disk1s1/ {printf("%sB\n", $2)}'|cut -c 1-3)
 #usage=$freediskspace / $totalspace
-usage=$(echo "scale = 2; ($freediskspace / $totalspace)*100" | bc)
-busy=$(echo "scale = 2; (1-($freediskspace / $totalspace))*100" | bc)
+free_perc=$(echo "scale = 2; ($freediskspace / $totalspace)*100" | bc)
+used_perc=$(echo "scale = 2; (1-($freediskspace / $totalspace))*100" | bc)
 
 printf "DiskAvl: $freediskspace GB / $totalspace GB\n"
 echo "---"
-printf "Perc. Available: %0.2f%%\n" "$usage"
-printf "Perc. Occupied: %0.2f%%\n" "$busy"
+printf "Perc. Available: %0.2f%%\n" "$free_perc"
+printf "Perc. Used: %0.2f%%\n" "$used_perc"
 echo "Refresh | refresh=true"
