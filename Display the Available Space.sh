@@ -9,6 +9,7 @@
 # <xbar.dependencies>bash</xbar.dependencies>
 
 # xbar Free disk space
+#check your disks list with df in terminal
 
 freediskspace=$(/bin/df -H | /usr/bin/awk '/\/dev\/disk1s1/ {printf("%sB\n", $4)}'|cut -c 1-3)
 totalspace=$(/bin/df -H | /usr/bin/awk '/\/dev\/disk1s1/ {printf("%sB\n", $2)}'|cut -c 1-3)
