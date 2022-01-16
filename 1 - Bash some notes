@@ -1,0 +1,16 @@
+You may want to create a title of a menu that you can also click
+
+you can set a label and then pipe in this way:
+
+body="$body\n 🔴  $host - looks down from here | color=red bash=ssh param1=$host terminal=true"
+
+where color = red is just the color of the text
+
+The important thing is 'bash =....'
+
+at the right of the equal you can set any command you want.
+You must also define the parameters that usually follow the command (you can check it in the terminal)
+Finally!
+
+If you want to run the command in the terminal you have to set the option 'terminal=true'
+If this option is not stated the command will not run 
