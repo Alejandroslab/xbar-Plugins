@@ -1,0 +1,9 @@
+Remember that you can also run your scripts pointing to a folder placed on another device (like a server)
+
+To indicate that path first the device must be mounted in your mac
+
+Then this is how to indicate the path:
+
+/Volumes/MyServer
+
+You can also check it opening a terminal in the device that you have mounted 
